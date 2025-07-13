@@ -4,9 +4,9 @@
 </p>
 
 <p align="center">
-  <b>A modern, extensible toolkit for package management:</b><br>
+  <b>An extensible package management toolkit:</b><br>
   <em>
-     Install, update, remove, and manage packages across most major distributions. Includes AppImage support, system health checks, history tracking, Docker, Snapper snapshot integration, and more.
+     Install, update, remove, and manage packages across most major distributions. Includes AppImage support, package and package-manager health checks, history tracking with rollback features, Docker, Snapper snapshot integration, and more.
   </em>
 </p>
 
@@ -19,17 +19,17 @@
 <hr/>
 
 <!-- Features Section -->
-<h2 align="center">✨ Features</h2>
+<h2 align="center">Features</h2>
 
 <table align="center">
   <tr><td><b>Unified Interface</b></td><td>Single command syntax for all major package managers</td></tr>
-  <tr><td><b>Intelligent Search</b></td><td>Smart filtering, categorization, and fuzzy matching</td></tr>
-  <tr><td><b>Plugin System</b></td><td>Supports both template-based and Python-based plugins for custom features</td></tr>
+  <tr><td><b>Search</b></td><td>Filtering, categorization, and fuzzy matching</td></tr>
+  <tr><td><b>Plugin System</b></td><td>Template-based and Python-based plugins for custom features</td></tr>
   <tr><td><b>Session Tracking</b></td><td>Remembers user preferences and tracks command history</td></tr>
   <tr><td><b>Installation History</b></td><td>Track installations with dependency information and rollback capabilities</td></tr>
   <tr><td><b>Health Checks</b></td><td>Multi-manager health checks with risk assessment and interactive fixes</td></tr>
   <tr><td><b>Shell Integration</b></td><td>Command-not-found suggestions</td></tr>
-  <tr><td><b>Beautiful Output</b></td><td>Colorful, easy-to-read tables and progress indicators</td></tr>
+  <tr><td><b>Colorful Interface</b></td><td>Colorful, easy-to-read tables and progress indicators</td></tr>
   <tr><td><b>XDG Compliance</b></td><td>Full XDG Base Directory specification support</td></tr>
 </table>
 
@@ -38,7 +38,7 @@
 <!-- Install Section -->
 <h2 align="center">🚀 Quick Start</h2>
 
-<p align="center"><b>Installation steps:</b></p>
+<p align="center"><b>Installation:</b></p>
 
 ```bash
 git clone https://github.com/luvis/paka.git
@@ -88,13 +88,13 @@ paka config                    # Interactive configuration
 ## Features
 
 - **Unified Interface**: Single command syntax for multiple package managers
-- **Intelligent Search**: Smart filtering, categorization, and fuzzy matching
-- **Advanced Plugin System**: Supports both template-based and Python-based plugins for custom features
+- **Search**: Filtering, categorization, and fuzzy matching
+- **Plugin System**: Template-based and Python-based plugins for custom features
 - **Session Management**: Remembers user preferences and tracks command history
 - **Installation History**: Track installations with dependency information and rollback capabilities
 - **Health System**: Multi-manager health checks with risk assessment and interactive fixes
 - **Shell Integration**: Optional command-not-found suggestions
-- **Beautiful Output**: Colorful, easy-to-read tables and progress indicators
+- **Colorful Interface**: Colorful, easy-to-read tables and progress indicators
 - **XDG Compliance**: Full XDG Base Directory specification support
 - **Privilege Management**: Context-aware privilege escalation
 - **Scope Support**: User and system-wide configuration and plugin management
@@ -129,7 +129,7 @@ PAKA is built with extensibility and user experience in mind:
 - **Session Manager**: Tracks user behavior and preferences
 - **History Manager**: Installation tracking with dependency information and rollback capabilities
 - **Health Manager**: Multi-manager health monitoring and fixes
-- **UI Manager**: Beautiful, colorful output with progress indicators
+- **UI Manager**: Colorful output with progress indicators
 - **Plugin Manager**: Extensible plugin system with simple templates
 - **Config Manager**: Hierarchical configuration management
 - **Directory Manager**: XDG and system-wide directory standards
@@ -140,7 +140,7 @@ PAKA is built with extensibility and user experience in mind:
 
 ## Plugin System
 
-PAKA features a comprehensive plugin system with three types:
+PAKA includes a plugin system with three types:
 
 ### 1. Runtime Plugins
 Actions that happen during PAKA operations:
@@ -175,10 +175,10 @@ paka config plugins create
 
 ## Health System
 
-PAKA includes a comprehensive health monitoring system focused on package management:
+PAKA includes health monitoring for package management:
 
 - **Multi-Manager Health Checks**: All 14 supported package managers
-- **Interactive Fix System**: User-friendly numbered menu for selecting fixes
+- **Interactive Fix System**: Numbered menu for selecting fixes
 - **Safe Operations**: All fixes are safe and package manager-specific
 - **Real-time Monitoring**: Check system health before critical operations
 - **Auto-Fix Mode**: `--fix-all` flag for automated resolution
