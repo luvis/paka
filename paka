@@ -1,0 +1,133 @@
+#!/usr/bin/env python3
+"""
+PAKA - Universal Package Manager Wrapper
+
+Main executable script that provides a unified interface for multiple package managers.
+"""
+
+import sys
+import os
+import argparse
+from pathlib import Path
+from datetime import datetime
+
+# Add the src directory to the Python path
+script_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(script_dir, 'src'))
+
+try:
+    from core.engine import PAKAEngine
+except ImportError:
+    # Try alternative path for installed version
+    sys.path.insert(0, '/usr/local/share/paka')
+    from core.engine import PAKAEngine
+
+
+def main():
+    """Main entry point for PAKA"""
+    start_time = datetime.now()
+    
+    parser = argparse.ArgumentParser(
+        description="PAKA - Universal Package Manager Wrapper",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  paka search firefox          # Search for packages across all managers
+  paka search firefox -m dnf   # Search only in DNF package manager
+  paka search firefox -m appimage  # Search only AppImages
+  paka install vim             # Install package with interactive selection
+  paka install vim -m apt      # Install using APT only
+  paka remove vim              # Remove package
+  paka remove vim -m flatpak   # Remove only from Flatpak
+  paka update                  # Update package lists
+  paka update -m dnf           # Update only DNF repositories
+  paka upgrade                 # Install available updates
+  paka upgrade -m snap         # Upgrade only Snap packages
+  paka purge vim               # Remove package and config files
+  paka health                  # Check system health and offer fixes
+  paka health --fix-all        # Automatically fix all issues
+  paka history                 # Show installation history
+  paka reconcile               # Reconcile history with actual package status
+  paka config show             # Show configuration
+        """
+    )
+    
+    # Main command
+    parser.add_argument('command', choices=[
+        'search', 'install', 'remove', 'purge', 'update', 'upgrade', 
+        'health', 'history', 'config', 'shell-not-found', 'reconcile'
+    ], help='Command to execute')
+    
+    # Subcommands and arguments
+    parser.add_argument('args', nargs='*', help='Command arguments')
+    
+    # Global options
+    parser.add_argument('--manager', '-m', help='Specific package manager to use')
+    parser.add_argument('--verbose', '-v', action='store_true', help='Verbose output')
+    parser.add_argument('--yes', '-y', action='store_true', help='Skip confirmation prompts')
+    parser.add_argument('--dry-run', action='store_true', help='Show what would be done without doing it')
+
+    parser.add_argument('--version', action='store_true', help='Show version information')
+    
+    # Health command options
+    parser.add_argument('--fix-all', action='store_true', help='Automatically fix all health issues')
+    parser.add_argument('--interactive', action='store_true', help='Interactive fix mode')
+    
+    # History command options
+    parser.add_argument('--limit', type=int, help='Limit number of history entries')
+    
+    args = parser.parse_args()
+    
+    # Handle version and help
+    if args.version:
+        print("PAKA version 0.1.0")
+        print("Universal Package Manager Wrapper")
+        sys.exit(0)
+    
+    # Check if no command was provided (show help)
+    if not args.command:
+        parser.print_help()
+        sys.exit(0)
+    
+    # Initialize PAKA engine
+    try:
+        engine = PAKAEngine()
+    except Exception as e:
+        print(f"Error initializing PAKA: {e}")
+        sys.exit(1)
+    
+    # Prepare options dictionary
+    options = {
+        'manager': args.manager,
+        'verbose': args.verbose,
+        'yes': args.yes,
+        'dry_run': args.dry_run,
+        'fix_all': args.fix_all,
+        'interactive': args.interactive,
+        'limit': args.limit
+    }
+    
+    try:
+        # Execute command
+        exit_code = engine.run_command(args.command, args.args, options)
+        
+        # Display timing information
+        end_time = datetime.now()
+        if args.verbose:
+            engine.display_timing(start_time, end_time)
+        
+        sys.exit(exit_code)
+        
+    except KeyboardInterrupt:
+        print("\nOperation cancelled by user")
+        sys.exit(1)
+    except Exception as e:
+        print(f"Error: {e}")
+        if args.verbose:
+            import traceback
+            traceback.print_exc()
+        sys.exit(1)
+
+
+if __name__ == '__main__':
+    main() 
